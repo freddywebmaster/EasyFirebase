@@ -1,10 +1,10 @@
 {
-  "name": "easy-firebase",
-  "version": "0.2.0",
+  "name": "easy-firebase-orm",
+  "version": "0.3.1",
   "description": "orm for firebase (alpha), not ready to use, this package will be available in 2022",
   "main": "./src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo Hello EasyFirebase"
   },
   "repository": {
     "type": "git",
