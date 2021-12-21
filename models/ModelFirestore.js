@@ -1,12 +1,7 @@
 class ModelFirestore {
     constructor(firestore) {
         this.collection = '';
-        this.data = {};
         this.firestore = firestore;
-    }
-
-    setDataModel(data) {
-        this.data = data;
     }
 
     setCollection(collection) {
@@ -17,8 +12,18 @@ class ModelFirestore {
         this.firestore = firestore
     }
 
-    async save() {
-        const doc = await this.firestore.addDoc(this.collection, this.data);
+    async save(data) {
+        const doc = await this.firestore.addDoc(this.collection, data);
+        return doc;
+    }
+
+    async update(id, data){
+        const doc = await this.firestore.updateDoc(this.collection, id, data);
+        return doc;
+    }
+
+    async findOne(id){
+        const doc = await this.firestore.getDocById(this.collection, id);
         return doc;
     }
 
