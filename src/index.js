@@ -3,7 +3,7 @@ import { getFirestore } from "firebase/firestore";
 import { Firestore } from './functions';
 
 const EaseFirebase = (appCredentials) => {
-    //Inicilizar firebase app
+    //initialize firebase app
     if (!firebase.apps.length) {
         firebase.initializeApp(appCredentials);
     } else {
@@ -11,17 +11,12 @@ const EaseFirebase = (appCredentials) => {
     }
 
     //create refs firebase
-
     const db = getFirestore();
-
-
-    //create instance class
-
+    //create instance of my class firestore
     const firestore = new Firestore(db);
 
 
-    // return the class
-
+    // return instaces whit app configurated
     return {
         firestore
     }
