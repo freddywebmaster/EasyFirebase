@@ -14,12 +14,13 @@ import {
   query,
   where,
   onSnapshot,
+  getFirestore
 } from "firebase/firestore";
 
 class Firestore {
 
-  constructor(db){
-    this.db = db;
+  constructor(config){
+    this.db = getFirestore(config);
   }
 
   async addDoc(colleccion, data, id="") {
