@@ -4,7 +4,8 @@
   "description": "orm for firebase (alpha), not ready to use, this package will be available in 2022",
   "main": "index.js",
   "scripts": {
-    "test": "echo Hello EasyFirebase"
+    "test": "echo Hello EasyFirebase",
+    "tsc": "tsc ./typescript/**/*"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,11 @@
   },
   "homepage": "https://github.com/FreddyGames69/EasyFirebase#readme",
   "dependencies": {
-    "firebase": "^9.6.1"
+    "firebase": "^9.6.1",
+    "react": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.37",
+    "typescript": "^4.5.4"
   }
 }
