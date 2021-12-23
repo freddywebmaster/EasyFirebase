@@ -1,6 +1,6 @@
 {
   "name": "easy-firebase-orm",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "orm for firebase (alpha), not ready to use, this package will be available in 2022",
   "main": "index.js",
   "scripts": {
