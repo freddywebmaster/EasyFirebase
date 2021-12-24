@@ -1,20 +1,23 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const react_1 = require("react");
-function useAuth(auth) {
-    const [userAuth, setUserAuth] = (0, react_1.useState)(null);
-    (0, react_1.useEffect)(() => {
-        const unsuscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                setUserAuth(user);
-            }
-            else {
+import { useEffect, useState } from 'react';
+import { getAuth } from 'firebase/auth';
+function useAuth(){
+
+    const auth = getAuth();
+    const [userAuth, setUserAuth] = useState(null);
+
+    useEffect(()=>{
+        const unsuscribe = auth.onAuthStateChanged( (user) =>{
+            if( user ){
+                setUserAuth(user)
+            }else{
                 setUserAuth(null);
             }
         });
-        return () => unsuscribe();
+        return ()=> unsuscribe();
         // eslint-disable-next-line
-    }, [userAuth]);
+    },[userAuth]);
+
     return userAuth;
 }
-exports.default = useAuth;
+
+export default useAuth;
