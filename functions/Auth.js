@@ -11,7 +11,6 @@ import {
     updateProfile
 } from "firebase/auth";
 import Firestore from './Firestore';
-import { isError } from "util";
 
 const googleProvider = new GoogleAuthProvider();
 const FacebookProvider = new FacebookAuthProvider();
@@ -62,7 +61,7 @@ class Authentication {
                     console.log('error deleting register');
                 }
             }
-            return error.message;
+            return error;
         }
     }
 
@@ -70,7 +69,7 @@ class Authentication {
         try {
             await signInWithEmailAndPassword(this.auth, email, password)
         } catch (error) {
-            return error.message;
+            return error;
         }
     }
 
@@ -78,7 +77,7 @@ class Authentication {
         try {
             const result = await signInWithPopup(this.auth, googleProvider);
             const user = result.user;
-            const newUser = this.getUser('email', user.email);
+            const newUser = await this.getUser('email', user.email);
             if (!newUser.exist || newUser.user.provider !== 'google') {
                 this.saveUserData({
                     id: user.uid,
@@ -90,7 +89,7 @@ class Authentication {
             return user;
         } catch (error) {
             console.log(error.message);
-            return error.message;
+            return error;
         }
     }
 
@@ -180,6 +179,14 @@ class Authentication {
         } catch (error) {
             console.log(error)
             return error;
+        }
+    }
+
+    async deleteAccount(){
+        try {
+            
+        } catch (error) {
+            
         }
     }
 
