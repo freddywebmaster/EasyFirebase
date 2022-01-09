@@ -111,8 +111,8 @@ class Authentication {
             return user;
         } catch (error) {
             if (error.message === 'Firebase: Error (auth/account-exists-with-different-credential).')
-                return 'the email already use in other provider, (github, facebook, email, etc)';
-            return error.message;
+                return {error: 'the email already use in other provider, (github, facebook, email, etc)'};
+            return error;
         }
     }
 
@@ -135,8 +135,7 @@ class Authentication {
         signInWithPopup(this.auth, FacebookProvider)
             .then((result) => {
                 const user = result.user;
-                const credential = FacebookAuthProvider.credentialFromResult(result);
-                const accessToken = credential.accessToken;
+                return user;
             })
             .catch((error) => {
                 return error;
