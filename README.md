@@ -24,7 +24,7 @@ only install firebase if you dont have.
 
 3. inizialize the app with your firebase credentials
 
-```
+```javascript
 const firebaseConfig = {
   apiKey: "",
   authDomain: "",
@@ -40,7 +40,7 @@ const { app } = EasyFirebase(firebaseConfig);
 
 4. instace the classes with your app inizialize in the constructor
 
-```
+```javascript
 const auth = new Auth(app);
 const firestore = new Firestore(app);
 const storage = new Storage(app);
@@ -48,7 +48,7 @@ const storage = new Storage(app);
 
 5. Export your instances to start use the functions
 
-```
+```javascript
 export {
     auth, firestore, storage
 }
@@ -56,7 +56,7 @@ export {
 
 6. The final configuration would look like this ...
 
-```
+```javascript
 import EasyFirebase from "easy-firebase-react"; //to initialize your app firebase
 import {
     Auth,
@@ -96,7 +96,7 @@ export {
 
 2. use the functions avalibles...
 
-```
+```javascript
 const res = firestore.addDoc('products', {
     name: 'tv', price: 500
 });
@@ -113,7 +113,7 @@ Every time a user is created or a user is updated, easy-firebase-react also save
 
 2. make async function like this..
 
-```
+```javascript
 import { auth } from 'YOUR_CONFIG_FILE';
 
 const onSubmit = async () => {
@@ -133,7 +133,7 @@ const onSubmit = async () => {
 
 2. make async function like this..
 
-```
+```javascript
 import { auth } from 'YOUR_CONFIG_FILE';
 
 const onSubmit = async () => {
@@ -152,7 +152,7 @@ const onSubmit = async () => {
 
 2. make async function like this..
 
-```
+```javascript
 import { auth } from 'YOUR_CONFIG_FILE';
 
 const onClickButton = async () => {
@@ -169,7 +169,7 @@ const onClickButton = async () => {
 
 2. make async function like this..
 
-```
+```javascript
 import { auth } from 'YOUR_CONFIG_FILE';
 
 const onClickButton = async () => {
@@ -185,7 +185,7 @@ const onClickButton = async () => {
 you can manage the current user auth with a custom hook from EasyFirebase lib
 
 ## Example
-```
+```javascript
 import { useAuth } from 'easy-firebase-react/hooks';
 
 const HomeView = () => {
@@ -195,7 +195,7 @@ const HomeView = () => {
   return(
     <div>
       {
-        user ? <p>{user.displayName}</p> : <p>user not auth<p/>
+        user ? (<p>{user.displayName}</p>) : (<p>user not auth<p/>)
       }
     </div>
   )
@@ -205,7 +205,7 @@ const HomeView = () => {
 ## Close Session
 to close a session you can use the next function
 
-```
+```javascript
 import { auth } from 'YOUR_CONFIG_FILE';
 
 auth.closeSession();
