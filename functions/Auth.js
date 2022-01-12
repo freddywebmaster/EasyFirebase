@@ -31,7 +31,8 @@ class Authentication {
          */
         const user = await this.getUser('email', email.toLowerCase());
         if (user.exist) return {
-            error: 'the email account already exist'
+            error: true,
+            message: 'the email account already exist'
         }
 
         /**
@@ -50,7 +51,11 @@ class Authentication {
                 provider: 'email'
             }, newUser.user.uid);
 
-            return newUser.user;
+            return {
+                error: false,
+                message: 'Account created succesfully',
+                user: newUser.user
+            };
         } catch (error) {
             const user = await this.getUser('email', email);
             if(user.exist){
@@ -58,18 +63,31 @@ class Authentication {
                 try {
                     await this.auth.currentUser.delete();
                 } catch (error) {
-                    console.log('error deleting register');
+                    return {
+                        error: true,
+                        message: 'error deleting register'
+                    }
                 }
             }
-            return error;
+            return {
+                error: true,
+                message: error.message
+            };
         }
     }
 
     async loginAccount(email, password) {
         try {
             await signInWithEmailAndPassword(this.auth, email, password)
+            return {
+                error: false,
+                message: 'Login successfully'
+            }
         } catch (error) {
-            return error;
+            return {
+                error: true,
+                message: error.message
+            };
         }
     }
 
@@ -86,10 +104,16 @@ class Authentication {
                     provider: 'google'
                 }, user.uid)
             }
-            return user;
+            return {
+                error: false,
+                message: 'Authentication successfully',
+                user
+            };
         } catch (error) {
-            console.log(error.message);
-            return error;
+            return {
+                error: true,
+                message: error.message
+            };
         }
     }
 
@@ -108,11 +132,18 @@ class Authentication {
                     provider: 'github'
                 }, user.uid);
             }
-            return user;
+            return {
+                error: false,
+                message: 'Authentication successfully',
+                user
+            };
         } catch (error) {
             if (error.message === 'Firebase: Error (auth/account-exists-with-different-credential).')
-                return {error: 'the email already use in other provider, (github, facebook, email, etc)'};
-            return error;
+                return {error: true, message: 'the email already use in other provider, (github, facebook, email, etc)'};
+            return {
+                error: true,
+                message: error.message
+            };
         }
     }
 
@@ -131,7 +162,7 @@ class Authentication {
         };
     }
 
-    loginFacebook() {
+    /*loginFacebook() {
         signInWithPopup(this.auth, FacebookProvider)
             .then((result) => {
                 const user = result.user;
@@ -140,26 +171,32 @@ class Authentication {
             .catch((error) => {
                 return error;
             });
-    }
+    }*/
 
     async saveUserData(data, id) {
         try {
             const result = this.db.addDoc(this.collection, data, id);
             return result;
         } catch (error) {
-            return error;
+            return {
+                error: true,
+                message: error.message
+            };
         }
     }
 
 
-    async changeNameUser(newName) {
+    /*async changeNameUser(newName) {
         try {
-            await this.auth.currentUser.updateProfile({ displayName: newName })
+            await this.auth.currentUser.updateProfile({ displayName: newName });
+            const  res = await this.saveUserData({
+                name: newName
+            });
         } catch (error) {
             console.log(error);
             return error;
         }
-    }
+    }*/
 
     async reAuthUser(password, callBack) {
         const user = this.auth.currentUser;
@@ -175,17 +212,15 @@ class Authentication {
     async closeSession() {
         try {
             await this.auth.signOut()
+            return {
+                error: false,
+                message: 'signOut successfully'
+            }
         } catch (error) {
-            console.log(error)
-            return error;
-        }
-    }
-
-    async deleteAccount(){
-        try {
-            
-        } catch (error) {
-            
+            return {
+                error: false,
+                message: error.message
+            };
         }
     }
 
