@@ -106,7 +106,6 @@ console.log(res);
 ```
 
 # Firebase Authentication
-Every time a user is created or a user is updated, easy-firebase-react also saves the data of this user in firestore to be able to have a control of users, for example sometimes we need to perform user searches, so remember to have ready database in firestore before authenticating users.
 
 ## Create Account With Email
 1. Remenber activate the email auth options in your firebase console

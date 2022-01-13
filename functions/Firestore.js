@@ -23,101 +23,108 @@ class Firestore {
         this.db = getFirestore(app);
     }
 
-    async addDoc(colleccion, data, id = '') {
-        if (typeof id !== 'string') return console.error('The id is not a String');
+    async addDoc(col, data, id = '') {
         try {
             if (id.trim() === '') {
-                const docRef = await addDoc(collection(this.db, colleccion), data);
+                const docRef = await addDoc(collection(this.db, col), data);
                 data.id = docRef.id;
                 return data;
             } else {
-                await setDoc(doc(this.db, colleccion, id), data, {merge: true});
+                await setDoc(doc(this.db, col, id), data, {merge: true});
                 data.id = id;
                 return data;
             }
         } catch (e) {
-            console.error("Error adding document: ", e);
-            return e;
+            return {error: true, message: e.message};
         }
     }
 
-    async updateDoc(colleccion, docId, newData) {
+    async updateDoc(col, docId, newData, merge = true) {
         try {
-            const docRef = doc(this.db, colleccion, docId);
-            setDoc(docRef, newData, { merge: true });
+            const docRef = doc(this.db, col, docId);
+            setDoc(docRef, newData, { merge: merge });
             newData.id = docId;
             return newData;
         } catch (e) {
-            console.error("Error updating document: ", e);
-            return e;
+            return {error: true, message: e.message};
         }
     }
 
-    async deleteDoc(colleccion, idDoc) {
+    async deleteDoc(col, idDoc) {
+        const docSearch = await this.getDocById(col, idDoc);
+        if(docSearch.error) return {error: true, message: 'doc not exist'}
         try {
-            await deleteDoc(doc(this.db, colleccion, idDoc));
-            return idDoc;
+            await deleteDoc(doc(this.db, col, idDoc));
+            return { error: false, message: 'not errors' };
         } catch (e) {
-            console.error("Error deleting document: ", e);
-            return e;
+            return {error: true, message: e.message};
         }
     }
 
-    async deleteOrAddInDocArray(colleccion, idDoc, field, data, type = 'add') {
+    async addInArray(col, id, field, data) {
         try {
-            const docRef = doc(this.db, colleccion, idDoc);
+            const docRef = doc(this.db, col, id);
             await updateDoc(docRef, {
-                [field]: type !== 'remove' ? arrayUnion(data) : arrayRemove(data),
+                [field]: arrayUnion(data)
             });
-            const msg = { id: idDoc, removedData: data, array: field };
-            return msg;
+
+            return { error: false };
         } catch (e) {
-            console.error("Error updating array document: ", e);
-            return e;
+            return {error: true, message: e.message};
         }
     }
 
-    async incrementOrDecrementNumber(colleccion, docId, field, number) {
+    async deleteInArray(col, id, field, data) {
         try {
-            const docRef = doc(this.db, colleccion, docId);
+            const docRef = doc(this.db, col, id);
+            await updateDoc(docRef, {
+                [field]: arrayRemove(data)
+            });
+
+            return { error: false };
+        } catch (e) {
+            return {error: true, message: e.message};
+        }
+    }
+
+    async incrementOrDecrementNumber(col, docId, field, number) {
+        try {
+            const docRef = doc(this.db, col, docId);
             await updateDoc(docRef, {
                 [field]: increment(number),
             });
-            return true;
+            return { error: false };
         } catch (e) {
-            console.error("Error increment in document: ", e);
-            return e;
+            return {error: true, message: e.message};
         }
     }
 
-    async deleteFieldInDoc(colleccion, docId, field) {
+    async deleteFieldInDoc(col, docId, field) {
         try {
-            const docRef = doc(this.db, colleccion, docId);
+            const docRef = doc(this.db, col, docId);
             await updateDoc(docRef, {
                 [field]: deleteField(),
             });
-            return { fieldRemoved: field, docId };
+            return { error: false };
         } catch (e) {
-            console.error("Error deleting field in document: ", e);
-            return e;
+            return {error: true, message: e.message};
         }
     }
 
-    async getDocById(colleccion, id) {
-        const docRef = doc(this.db, colleccion, id);
+    async getDocById(col, id) {
+        const docRef = doc(this.db, col, id);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             let result = docSnap.data();
             result.id = docSnap.id;
             return result;
         } else {
-            console.error("No such document!");
-            return "No such document!";
+            return {error: true, message: 'doc not exist'};
         }
     }
 
-    async getDocsByParam(colleccion, field, condition, param) {
-        const q = query(collection(this.db, colleccion), where(field, condition, param));
+    async getDocsByParam(col, field, condition, param) {
+        const q = query(collection(this.db, col), where(field, condition, param));
         const querySnapshot = await getDocs(q);
         const result = [];
         await querySnapshot.forEach((doc) => {
@@ -129,8 +136,8 @@ class Firestore {
         return result;
     }
 
-    async getAllInCollection(colleccion) {
-        const querySnapshot = await getDocs(collection(this.db, colleccion));
+    async getAllInCollection(col) {
+        const querySnapshot = await getDocs(collection(this.db, col));
         const result = [];
         await querySnapshot.forEach((doc) => {
             let item = doc.data();
@@ -140,9 +147,9 @@ class Firestore {
         return result;
     }
 
-    async getDocByIdInRealTime(colleccion, id, callBack) {
+    async getDocByIdInRealTime(col, id, callBack) {
         try {
-            return onSnapshot(doc(this.db, colleccion, id), function (doc) {
+            return onSnapshot(doc(this.db, col, id), function (doc) {
                 callBack(doc.data());
             });
         } catch (error) {
@@ -151,13 +158,13 @@ class Firestore {
     }
 
     async getDocsByParamInRealTime(
-        colleccion,
+        col,
         field,
         condition,
         param,
         callBack
     ) {
-        const q = query(collection(this.db, colleccion), where(field, condition, param));
+        const q = query(collection(this.db, col), where(field, condition, param));
         return onSnapshot(q, (querySnapshot) => {
             const result = [];
             querySnapshot.forEach((doc) => {
@@ -167,6 +174,32 @@ class Firestore {
             });
             callBack(result);
         });
+    }
+
+    async arrayContainsAny(col, field, array){
+        const q = query(collection(this.db, col), where(field , 'array-contains-any', array));
+        const querySnapshot = await getDocs(q);
+        const result = [];
+        await querySnapshot.forEach((doc) => {
+            let item = doc.data();
+            item.id = doc.id;
+            result.push(item);
+        });
+
+        return result;
+    }
+
+    async arrayContains(col, field, value){
+        const q = query(collection(this.db, col), where(field , 'array-contains', value));
+        const querySnapshot = await getDocs(q);
+        const result = [];
+        await querySnapshot.forEach((doc) => {
+            let item = doc.data();
+            item.id = doc.id;
+            result.push(item);
+        });
+
+        return result;
     }
 
 }
