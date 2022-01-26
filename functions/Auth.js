@@ -136,7 +136,7 @@ class Authentication {
     }*/
 
     async updatePass(password, newPassword, callback){
-      const user = this.auth.currentUser();
+      const user = this.auth.currentUser;
       await this.reAuthUser(password, ()=>{
         updatePassword(user, newPassword).then(()=>{
           callback();
