@@ -9,6 +9,7 @@ import {
   GithubAuthProvider,
   FacebookAuthProvider,
   updateProfile,
+  updatePassword
 } from "firebase/auth";
 import Firestore from "./Firestore";
 
@@ -134,7 +135,18 @@ class Authentication {
         }
     }*/
 
-  /*async reAuthUser(password, callBack) {
+    async updatePass(password, newPassword, callback){
+      const user = this.auth.currentUser();
+      await this.reAuthUser(password, ()=>{
+        updatePassword(user, newPassword).then(()=>{
+          callback();
+        }).catch((e)=>{
+          console.log(e);
+        })
+      })
+    }
+
+  reAuthUser(password, callBack) {
     const user = this.auth.currentUser;
     const credential = EmailAuthProvider.credential(
       user.email.toLowerCase(),
@@ -145,10 +157,9 @@ class Authentication {
         callBack();
       })
       .catch((error) => {
-        console.log(error);
         return error;
       });
-  }*/
+  }
 
   async closeSession() {
     try {
