@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getAuth } from 'firebase/auth';
+const { useEffect, useState } = require('react');
+const { getAuth } = require('firebase/auth');
 
 function useAuth(){
 
@@ -21,4 +21,4 @@ function useAuth(){
     return userAuth;
 }
 
-export default useAuth;
+module.exports = useAuth;

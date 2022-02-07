@@ -1,8 +1,8 @@
-import Firestore from './Firestore';
-import Storage from './Storage';
-import Auth from './Auth';
+const Firestore = require('./Firestore');
+const Storage = require('./Storage');
+const Auth = require('./Auth');
 
-export {
+module.exports = {
     Firestore,
     Storage,
     Auth

@@ -1,4 +1,4 @@
-import {
+const {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
@@ -7,14 +7,12 @@ import {
   EmailAuthProvider,
   reauthenticateWithCredential,
   GithubAuthProvider,
-  FacebookAuthProvider,
   updateProfile,
   updatePassword
-} from "firebase/auth";
-import Firestore from "./Firestore";
+} = require("firebase/auth");
+const Firestore = require("./Firestore");
 
 const googleProvider = new GoogleAuthProvider();
-const FacebookProvider = new FacebookAuthProvider();
 const GithubProvider = new GithubAuthProvider();
 
 class Authentication {
@@ -111,30 +109,6 @@ class Authentication {
     }
   }
 
-
-  /*loginFacebook() {
-        signInWithPopup(this.auth, FacebookProvider)
-            .then((result) => {
-                const user = result.user;
-                return user;
-            })
-            .catch((error) => {
-                return error;
-            });
-    }*/
-
-  /*async changeNameUser(newName) {
-        try {
-            await this.auth.currentUser.updateProfile({ displayName: newName });
-            const  res = await this.saveUserData({
-                name: newName
-            });
-        } catch (error) {
-            console.log(error);
-            return error;
-        }
-    }*/
-
     async updatePass(password, newPassword, callback){
       const user = this.auth.currentUser;
       await this.reAuthUser(password, ()=>{
@@ -177,4 +151,4 @@ class Authentication {
   }
 }
 
-export default Authentication;
+module.exports = Authentication;

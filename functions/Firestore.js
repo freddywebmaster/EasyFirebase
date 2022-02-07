@@ -1,4 +1,4 @@
-import {
+const {
     collection,
     addDoc,
     getDocs,
@@ -15,7 +15,7 @@ import {
     where,
     onSnapshot,
     getFirestore
-} from "firebase/firestore";
+} = require("firebase/firestore");
 
 
 class Firestore {
@@ -204,4 +204,4 @@ class Firestore {
 
 }
 
-export default Firestore;
+module.exports = Firestore;

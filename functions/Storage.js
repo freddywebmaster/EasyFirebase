@@ -1,9 +1,9 @@
-import {
+const {
     ref,
     getDownloadURL,
     uploadBytesResumable,
     getStorage,
-  } from "firebase/storage";
+  } = require("firebase/storage");
   
   class Storage {
     constructor(app) {
@@ -39,4 +39,4 @@ import {
     }
   }
   
-  export default Storage;  
+module.exports = Storage;

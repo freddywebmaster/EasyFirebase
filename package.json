@@ -1,6 +1,6 @@
 {
   "name": "easy-firebase-react",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "EasyFirebase is a simple library to manage firestore, authentication and storare from firebase",
   "main": "index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/FreddyGames69/EasyFirebase#readme",
   "dependencies": {
-    "firebase": "^9.6.1"
+    "firebase": "9.6.1"
   },
   "devDependencies": {}
 }

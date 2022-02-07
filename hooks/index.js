@@ -1,5 +1,5 @@
-import useAuth from './useAuth';
+const useAuth = require('./useAuth');
 
-export {
+module.exports = {
     useAuth
 }

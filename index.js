@@ -1,16 +1,17 @@
-import { initializeApp } from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/auth';
-import 'firebase/storage';
+const firebase = require('firebase/compat/app');
+require('firebase/compat/firestore');
+require('firebase/compat/auth');
+require('firebase/storage');
 
 const EaseFirebase = ( appCredentials ) => {
     //initialize firebase app
-    const app = initializeApp(appCredentials);
+    const app = (!firebase.apps.length) ? 
+    firebase.initializeApp(appCredentials) : 
+    firebase.app();
 
     // return instace whit app configurated
     return {
         app
     }
 }
-
-export default EaseFirebase;
+module.exports = EaseFirebase;
