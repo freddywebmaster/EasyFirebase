@@ -5,11 +5,9 @@ require("firebase/storage");
 
 const EaseFirebase = (appCredentials, nameApp) => {
   //initialize firebase app
-  const app = initializeApp(appCredentials, nameApp || 'DEFAULT');
+  const app = initializeApp(appCredentials, nameApp || '[DEFAULT]');
 
   // return instace whit app configurated
-  return {
-    app
-  };
+  return app;
 };
 module.exports = EaseFirebase;
