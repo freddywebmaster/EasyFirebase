@@ -69,7 +69,7 @@ if (newDoc.error) {
 }
 ```
 
-# Manage Erros
+# Manage Errors
 
 - all functions of this library return firebase errors or custom errors
 - for better information you can log the response to the console
@@ -249,10 +249,9 @@ const addA = await firestore.addInArray(
 console.log(addA);
 ```
 
-## Add data in array
+## Delete data in array
 
-- adds data to an array, it can be anything, a string, object, array, etc.
-- if the array does not exist yet it will create it and add the data
+- to delete data from an array you have to pass the complete data so that it is deleted correctly
 
 ```javascript
 const delA = await firestore.deleteInArray(

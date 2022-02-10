@@ -1,11 +1,11 @@
 const { initializeApp } = require("firebase/app");
-require("firebase/compat/firestore");
-require("firebase/compat/auth");
+require("firebase/firestore");
+require("firebase/auth");
 require("firebase/storage");
 
-const EaseFirebase = (appCredentials) => {
+const EaseFirebase = (appCredentials, nameApp) => {
   //initialize firebase app
-  const app = initializeApp(appCredentials);
+  const app = initializeApp(appCredentials, nameApp || 'DEFAULT');
 
   // return instace whit app configurated
   return {
