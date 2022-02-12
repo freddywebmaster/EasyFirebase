@@ -37,7 +37,7 @@ const firebaseConfig = {
 };
 
 //pass your credentials to EasyFirebase and this return your app instance
-const { app } = EasyFirebase(firebaseConfig);
+const app = EasyFirebase(firebaseConfig);
 
 //create new instance of classes
 const auth = new Auth(app);
