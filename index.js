@@ -1,13 +1,13 @@
-const { initializeApp } = require("firebase/app");
-require("firebase/firestore");
-require("firebase/auth");
-require("firebase/storage");
+const { initEasyFirebase } = require("./dist/index");
 
-const EaseFirebase = (appCredentials, nameApp) => {
-  //initialize firebase app
-  const app = initializeApp(appCredentials, nameApp || '[DEFAULT]');
+const { Authentication, Firestore, Storage } = require("./dist/functions");
 
-  // return instace whit app configurated
-  return app;
+const { useAuthHook } = require("./dist/hooks");
+
+module.exports = {
+  initEasyFirebase,
+  Authentication,
+  Firestore,
+  Storage,
+  useAuthHook,
 };
-module.exports = EaseFirebase;

@@ -1,10 +1,10 @@
 {
   "name": "easy-firebase-react",
-  "version": "0.2.3",
-  "description": "EasyFirebase is a simple library to manage firestore, authentication and storare from firebase",
+  "version": "0.2.4",
+  "description": "easy-firebase-react is a simple library to manage firestore, authentication and storage from firebase",
   "main": "index.js",
   "scripts": {
-    "test": "echo Hello EasyFirebase"
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -12,9 +12,16 @@
   },
   "keywords": [
     "firebase",
+    "firestore",
+    "authentication",
+    "storage",
     "react",
     "javascript",
-    "easy-firebase"
+    "easy-firebase",
+    "firebase-hooks",
+    "react-fire",
+    "easy-firebase-react",
+    "easy-firebase-react-hooks"
   ],
   "author": "Freddy Gutierrez",
   "license": "MIT",
@@ -23,7 +30,11 @@
   },
   "homepage": "https://github.com/FreddyGames69/EasyFirebase#readme",
   "dependencies": {
-    "firebase": "9.6.1"
+    "firebase": "9.6.1",
+    "react": "17.0.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@types/firebase": "^3.2.1",
+    "@types/react": "^17.0.39"
+  }
 }

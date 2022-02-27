@@ -1,10 +1,12 @@
 # EasyFirebaseReact
 
-This library is being created in order to facilitate repetitive functions in firebase projects, **easy-firebase-react** makes it easier for us to manage users, firestore database, and upload files to storage.
-**This library is not finished but you can test it for now :)**
+This library was created to facilitate repetitive functions in Firebase projects, **easy-firebase-react** makes it easy for us to manage users, Firestore database and upload files to storage.
+
+This library comes equipped with ready-to-use classes and methods, and if you're using **react**, there are some custom hooks available.
 
 ### Content list
 
+- Before Start
 - Installation
 - Project Settings
 - Usage
@@ -13,10 +15,17 @@ This library is being created in order to facilitate repetitive functions in fir
 - Firebase Firestore
 - Firebase Storage
 
+## Before Start
+
+- Before starting I would like to mention that the examples I use are with async functions but you can use promises without problems, except for the functions that receive callbacks, those are already promises.
+
+- the documentation is somewhat incomplete but there are already several functions ready to use
+
 ## Installation
 
-`npm install easy-firebase-react firebase`
-only install firebase if you dont have.
+`npm install easy-firebase-react`
+
+- You dont need install firebase! becouse is a dependency of this library
 
 ## Configurations
 
@@ -57,15 +66,15 @@ export { auth, firestore, storage };
 2. use the functions avalibles with async/await...
 
 ```javascript
-const newDoc = await firestore.addDoc("products", {
+const res = await firestore.addDoc("products", {
   name: "tv smart 3",
   price: 500,
 });
 //Manage Errors
-if (newDoc.error) {
-  console.log(`error adding doc: ${newDoc.message}`);
+if (res.error) {
+  console.log(`error adding doc: ${res.message}`);
 } else {
-  console.log("doc added: ", newDoc);
+  console.log("doc added: ", res.data);
 }
 ```
 
@@ -89,7 +98,7 @@ console.log(res);
 
 1. Remenber activate the email auth options in your firebase console
 
-2. make async function like this..
+2. make async function like this.. (if you want, you can use promises)
 
 ```javascript
 import { auth } from "YOUR_CONFIG_FILE";
@@ -258,7 +267,8 @@ const delA = await firestore.deleteInArray(
   "products", //collection
   "8RvHtf437D4clakqBtNO", //docId
   "categories", //Array field
-  { //All data of document to delete
+  {
+    //All data of document to delete
     description: "desc of category",
     name: "category one",
   }
