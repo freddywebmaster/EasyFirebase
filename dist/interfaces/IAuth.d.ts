@@ -1,5 +1,4 @@
 import { User } from "firebase/auth";
-import { Auth } from "firebase/auth";
 export interface IAuthResponse {
     error: boolean;
     message: string;
@@ -10,7 +9,6 @@ export interface IUpdateProfile {
     photoURL?: string;
 }
 export interface AuthFunctions {
-    auth: Auth;
     createAccount(email: string, password: string, name?: string): Promise<IAuthResponse>;
     loginAccount(email: string, password: string): Promise<IAuthResponse>;
     loginGoogle(): Promise<IAuthResponse>;

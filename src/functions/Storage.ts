@@ -9,13 +9,13 @@ import {
   listAll,
 } from "firebase/storage";
 import { FirebaseApp } from "firebase/app";
+import { StorageFunctions } from '../interfaces/IStorage';
 
-export class Storage {
+export class Storage implements StorageFunctions {
   private storage: FirebaseStorage;
-  public lastUpload: string | null;
+
   constructor(app: FirebaseApp) {
     this.storage = getStorage(app);
-    this.lastUpload = null;
   }
 
   public async uploadFile(
@@ -37,7 +37,7 @@ export class Storage {
       (error) => console.log(error),
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          callback(downloadURL, `${reference}/${file.name}`);
+          callback(downloadURL, `${reference}/${file.name}`, file);
         });
       }
     );

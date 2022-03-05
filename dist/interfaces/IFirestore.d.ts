@@ -1,11 +1,12 @@
 import { WhereFilterOp, Unsubscribe } from "firebase/firestore";
-import { FirebaseApp } from "firebase/app";
-import { FirestoreFunctions, IResponse } from "../interfaces/IFirestore";
-export declare class Firestore implements FirestoreFunctions {
-    private db;
-    constructor(app: FirebaseApp);
+export interface IResponse {
+    error: boolean;
+    message: string;
+    data?: any;
+}
+export interface FirestoreFunctions {
     addDoc(col: string, data: any, id?: string): Promise<IResponse>;
-    updateDoc(col: string, docId: string, newData: any, merge?: boolean): Promise<IResponse>;
+    updateDoc(col: string, docId: string, newData: any, merge: boolean): Promise<IResponse>;
     deleteDoc(col: string, idDoc: string): Promise<IResponse>;
     addInArray(col: string, id: string, field: string, data: any): Promise<IResponse>;
     deleteInArray(col: string, id: string, field: string, data: any): Promise<IResponse>;

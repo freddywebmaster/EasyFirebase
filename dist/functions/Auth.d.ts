@@ -1,8 +1,7 @@
-import { Auth } from "firebase/auth";
 import { FirebaseApp } from "firebase/app";
 import { IAuthResponse, IUpdateProfile, AuthFunctions } from "../interfaces/IAuth";
 export declare class Authentication implements AuthFunctions {
-    auth: Auth;
+    private auth;
     constructor(app: FirebaseApp);
     createAccount(email: string, password: string, name?: string): Promise<IAuthResponse>;
     loginAccount(email: string, password: string): Promise<IAuthResponse>;

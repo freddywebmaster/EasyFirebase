@@ -17,16 +17,13 @@ import {
   getFirestore,
   Firestore as Fire,
   WhereFilterOp,
+  Unsubscribe,
 } from "firebase/firestore";
 import { FirebaseApp } from "firebase/app";
 
-interface IResponse {
-  error: boolean;
-  message: string;
-  data?: any;
-}
+import { FirestoreFunctions, IResponse } from "../interfaces/IFirestore";
 
-export class Firestore {
+export class Firestore implements FirestoreFunctions {
   private db: Fire;
   constructor(app: FirebaseApp) {
     this.db = getFirestore(app);
@@ -193,7 +190,11 @@ export class Firestore {
     }
   }
 
-  public async getDocByIdRT(col: string, id: string, callBack: Function) {
+  public async getDocByIdRT(
+    col: string,
+    id: string,
+    callBack: Function
+  ): Promise<Unsubscribe | IResponse> {
     try {
       return onSnapshot(doc(this.db, col, id), function (doc) {
         callBack(doc.data());
@@ -209,7 +210,7 @@ export class Firestore {
     condition: WhereFilterOp,
     param: string,
     callBack: Function
-  ) {
+  ): Promise<Unsubscribe | IResponse> {
     try {
       const q = query(collection(this.db, col), where(field, condition, param));
       return onSnapshot(q, (querySnapshot) => {

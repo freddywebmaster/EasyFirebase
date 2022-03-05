@@ -29,7 +29,7 @@ const TwitterProvider = new TwitterAuthProvider();
 import { IAuthResponse, IUpdateProfile, AuthFunctions } from "../interfaces/IAuth";
 
 export class Authentication implements AuthFunctions {
-  auth: Auth;
+  private auth: Auth;
 
   constructor(app: FirebaseApp) {
     this.auth = getAuth(app);

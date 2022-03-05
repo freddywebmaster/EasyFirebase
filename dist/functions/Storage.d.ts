@@ -1,8 +1,8 @@
 import { StorageReference } from "firebase/storage";
 import { FirebaseApp } from "firebase/app";
-export declare class Storage {
+import { StorageFunctions } from '../interfaces/IStorage';
+export declare class Storage implements StorageFunctions {
     private storage;
-    lastUpload: string | null;
     constructor(app: FirebaseApp);
     uploadFile(reference: StorageReference, file: File, callback: Function): Promise<void>;
     deleteFile(fileRef: string, callback?: Function): Promise<void>;

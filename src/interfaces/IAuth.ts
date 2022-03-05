@@ -1,7 +1,4 @@
 import { User } from "firebase/auth";
-import { Auth } from "firebase/auth";
-
-import { FirebaseApp } from "firebase/app";
 
 export interface IAuthResponse {
   error: boolean;
@@ -15,7 +12,6 @@ export interface IUpdateProfile {
 }
 
 export interface AuthFunctions {
-  auth: Auth;
   createAccount(
     email: string,
     password: string,

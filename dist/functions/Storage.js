@@ -5,7 +5,6 @@ const storage_1 = require("firebase/storage");
 class Storage {
     constructor(app) {
         this.storage = (0, storage_1.getStorage)(app);
-        this.lastUpload = null;
     }
     async uploadFile(reference, file, callback) {
         if (!file)
@@ -16,7 +15,7 @@ class Storage {
             const prog = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
         }, (error) => console.log(error), () => {
             (0, storage_1.getDownloadURL)(uploadTask.snapshot.ref).then((downloadURL) => {
-                callback(downloadURL, `${reference}/${file.name}`);
+                callback(downloadURL, `${reference}/${file.name}`, file);
             });
         });
     }

@@ -32,8 +32,12 @@ This library comes equipped with ready-to-use classes and methods, and if you're
 create a config file like this.. and only need set your credentials.
 
 ```javascript
-import EasyFirebase from "easy-firebase-react"; //to initialize your app firebase
-import { Auth, Firestore, Storage } from "easy-firebase-react/functions"; //classes with functions
+import {
+  initEasyFirebase,
+  Authentication,
+  Firestore,
+  Storage,
+} from "easy-firebase-react";
 
 //your credentials app
 const firebaseConfig = {
@@ -46,10 +50,10 @@ const firebaseConfig = {
 };
 
 //pass your credentials to EasyFirebase and this return your app instance
-const app = EasyFirebase(firebaseConfig);
+const app = initEasyFirebase(firebaseConfig);
 
 //create new instance of classes
-const auth = new Auth(app);
+const auth = new Authentication(app);
 const firestore = new Firestore(app);
 const storage = new Storage(app);
 
@@ -93,6 +97,39 @@ console.log(res);
 ```
 
 # Firebase Authentication
+
+### All auth functions avalibles
+
+```javascript
+
+  createAccount(
+    email: string,
+    password: string,
+    name?: string
+  );
+  loginAccount(email: string, password: string);
+  loginGoogle();
+  loginGithub();
+  loginFacebook();
+  loginTwitter();
+  updatePass(
+    password: string,
+    newPassword: string,
+    callback?: Function
+  );
+  UpdateProfile(data: IUpdateProfile, callback?: Function);
+  reAuthUser(password: string, callBack: Function);
+  sendVerification(callback?: Function);
+  sendResetPassword(email: string, callback: Function);
+  deleteAccount(password: string, callback: Function);
+  updateEmail(
+    password: string,
+    newEmail: string,
+    callback?: Function
+  );
+  closeSession(callback?: Function);
+
+```
 
 ## Create Account With Email
 
@@ -175,11 +212,11 @@ you can manage the current user auth with a custom hook from EasyFirebase lib
 ## Example
 
 ```javascript
-import { useAuth } from 'easy-firebase-react/hooks';
+import { useAuthHook } from "easy-firebase-react";
 
 const HomeView = () => {
 
-  const user = useAuth();
+  const user = useAuthHook();
 
   return(
     <div>
@@ -202,6 +239,64 @@ auth.closeSession();
 ```
 
 # Firebase Firestore
+### All firestore functions avalibles
+
+```javascript
+addDoc(col: string, data: any, id?: string);
+  updateDoc(
+    col: string,
+    docId: string,
+    newData: any,
+    merge: boolean
+  );
+  deleteDoc(col: string, idDoc: string);
+  addInArray(
+    col: string,
+    id: string,
+    field: string,
+    data: any
+  );
+  deleteInArray(
+    col: string,
+    id: string,
+    field: string,
+    data: any
+  );
+  incOrDecNumber(
+    col: string,
+    docId: string,
+    field: string,
+    number: number
+  );
+  deleteField(col: string, docId: string, field: string);
+  getDocById(col: string, id: string);
+  getDocsByParam(
+    col: string,
+    field: string,
+    condition: WhereFilterOp,
+    param: string
+  );
+  getAllInCol(col: string);
+  getDocByIdRT(
+    col: string,
+    id: string,
+    callBack: Function
+  );
+  getDocsByParamRT(
+    col: string,
+    field: string,
+    condition: WhereFilterOp,
+    param: string,
+    callBack: Function
+  );
+  arrayContainsAny(
+    col: string,
+    field: string,
+    array: Array<any>
+  );
+  arrayContains(col: string, field: string, value: any);
+  getMultipleCol(arrayCollections: Array<string>);
+```
 
 ## Add new document
 
