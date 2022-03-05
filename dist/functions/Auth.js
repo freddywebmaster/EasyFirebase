@@ -192,7 +192,7 @@ class Authentication {
             console.log(error);
         }
     }
-    async sednResetPassword(email, callback) {
+    async sendResetPassword(email, callback) {
         try {
             await (0, auth_1.sendPasswordResetEmail)(this.auth, email)
                 .then(() => {

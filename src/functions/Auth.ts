@@ -26,10 +26,10 @@ const GithubProvider = new GithubAuthProvider();
 const FacebookProvider = new FacebookAuthProvider();
 const TwitterProvider = new TwitterAuthProvider();
 
-import { IAuthResponse, IUpdateProfile } from "../interfaces/IAuth";
+import { IAuthResponse, IUpdateProfile, AuthFunctions } from "../interfaces/IAuth";
 
-export class Authentication {
-  private auth: Auth;
+export class Authentication implements AuthFunctions {
+  auth: Auth;
 
   constructor(app: FirebaseApp) {
     this.auth = getAuth(app);
@@ -246,7 +246,7 @@ export class Authentication {
     }
   }
 
-  public async sednResetPassword(
+  public async sendResetPassword(
     email: string,
     callback: Function
   ): Promise<void> {
